@@ -1,2 +1,1 @@
-# web-client
-TripHub web app.
+# Web Client
