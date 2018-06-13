@@ -1,5 +1,7 @@
 import React from 'react'
-import axios from 'axios'
+
+import api from '../utils/api'
+import { withAuth } from '../enhancers/auth'
 
 class Dashboard extends React.Component {
     state = {
@@ -7,7 +9,7 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount () {
-        axios('http://localhost:8000/v1/trips/')
+        api().get('/v1/trips')
             .then(t => { console.log(t); return t })
             .then(res => this.setState({ trips: res.data }))
     }
@@ -26,4 +28,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard
+export default withAuth(Dashboard)

@@ -5,15 +5,16 @@
 
 import React from 'react'
 
+import Auth from '../../utils/auth'
+
 class Login extends React.Component {
     componentDidMount () {
-        const loginRedirectUrl = process.env.REACT_APP_AUTH_LOGIN_URL
-        const { history } = this.props
-        history.replace(loginRedirectUrl)
+        // redirect to login page     
+        new Auth().login()
     }
 
     render () {
-        <div />
+        return <div />
     }
 }
 
