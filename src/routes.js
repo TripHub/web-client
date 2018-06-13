@@ -9,6 +9,8 @@ import {
 import Login from './scenes/auth/login'
 import Callback from './scenes/auth/callback'
 // Dashboard
+import Home from './scenes/home'
+import Create from './scenes/create'
 import Dashboard from './scenes/dashboard'
 
 export default () => (
@@ -17,7 +19,9 @@ export default () => (
             <Route path='/login' component={Login} />
             <Route path='/callback' component={Callback} />
             
-            <Route exact path='/' component={Dashboard} />
+            <Route exact path='/' component={Home} />
+            <Route path='/create' component={Create} />
+            <Route path='/:id' component={Dashboard} />
         </Switch>
     </Router>
 )

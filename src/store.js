@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-// import reducer from './reducers'
+import rootReducer from './modules/rootReducer'
 import thunk from 'redux-thunk'
 
 export default (initialState) => {
@@ -9,5 +9,5 @@ export default (initialState) => {
     middleware.push(require('redux-logger').default)
   }
 
-  return createStore(() => null, initialState, applyMiddleware(...middleware))
+  return createStore(rootReducer, initialState, applyMiddleware(...middleware))
 }

@@ -1,34 +1,35 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import api from '../utils/api'
 import { withAuth } from '../enhancers/auth'
 
-import Nav from '../components/nav'
+import trips from '../modules/trips'
+
+import Nav from '../modules/core/nav'
 
 class Dashboard extends React.Component {
-    state = {
-        trips: []
+    constructor (props) {
+        super(props)
+        const { dispatch } = props
+
+        this.actions = bindActionCreators(trips.actions, dispatch)
     }
 
     componentDidMount () {
-        api().get('/v1/trips')
-            .then(t => { console.log(t); return t })
-            .then(res => this.setState({ trips: res.data }))
+
     }
 
     render () {
         return (
             <React.Fragment>
                 <Nav />
-                <div>Dashboard</div>
-                {
-                    this.state.trips.map(t => (
-                        <strong key={t.id}>{t.title}</strong>
-                    ))
-                }
             </React.Fragment>
         )
     }
 }
 
-export default withAuth(Dashboard)
+const mapStateToProps = state => state
+
+export default connect(mapStateToProps)(withAuth(Dashboard))
