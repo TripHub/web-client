@@ -11,7 +11,7 @@ export default () => {
     return axios.create({
         baseURL: process.env.REACT_APP_SERVICES_TRIP,
         headers: {
-            Authorization: `Token ${accessToken}`
+            Authorization: `Bearer ${accessToken}`
         }
     })
 }

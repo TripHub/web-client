@@ -3,6 +3,8 @@ import React from 'react'
 import api from '../utils/api'
 import { withAuth } from '../enhancers/auth'
 
+import Nav from '../components/nav'
+
 class Dashboard extends React.Component {
     state = {
         trips: []
@@ -17,6 +19,7 @@ class Dashboard extends React.Component {
     render () {
         return (
             <React.Fragment>
+                <Nav />
                 <div>Dashboard</div>
                 {
                     this.state.trips.map(t => (

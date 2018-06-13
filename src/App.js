@@ -1,26 +1,25 @@
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from 'react-router-dom'
+import { Provider } from 'react-redux'
+import Routes from './routes'
 
-// styles
+import createStore from './store'
+
+// import global styles
 import './static/css/bootstrap.min.css'
 
-// Auth
-import Login from './scenes/auth/Login'
-import Callback from './scenes/auth/Callback'
-// Dashboard
-import Dashboard from './scenes/Dashboard'
+// redux store
+const store = createStore()
 
-export default () => (
-    <Router>
-        <Switch>
-            <Route path='/login' component={Login} />
-            <Route path='/callback' component={Callback} />
-            
-            <Route exact path='/' component={Dashboard} />
-        </Switch>
-    </Router>
-)
+export default class App extends React.Component {
+    componentDidMount () {
+        // global app init methods...
+    }
+
+    render () {
+        return (
+            <Provider store={store}>
+                <Routes />
+            </Provider>
+        )
+    }
+}
