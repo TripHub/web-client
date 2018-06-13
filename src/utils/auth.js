@@ -2,12 +2,11 @@ import auth0 from 'auth0-js'
 
 export default class Auth {
     constructor () {
-        console.log(`https://${process.env.REACT_APP_AUTH_AUTH0_DOMAIN}/userinfo`)
         this.auth0 = new auth0.WebAuth({
             domain: process.env.REACT_APP_AUTH_AUTH0_DOMAIN,
             clientID: process.env.REACT_APP_AUTH_AUTH0_CLIENT_ID,
             redirectUri: `${window.location.origin}/callback`,
-            audience: `https://${process.env.REACT_APP_AUTH_AUTH0_DOMAIN}/userinfo`,
+            audience: `https://api.triphub.io`,
             responseType: 'token id_token',
             scope: 'openid email profile'
         })
