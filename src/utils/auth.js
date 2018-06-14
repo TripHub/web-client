@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js'
+import jwt from 'jwt-decode'
 
 export default class Auth {
     constructor () {
@@ -52,6 +53,17 @@ export default class Auth {
      */
     static get idToken () {
         return window.localStorage.getItem(Auth.idTokenName)
+    }
+
+    /**
+     * Returns the id token as an object.
+     */
+    static get decodedIdToken () {
+        try {
+            return jwt(Auth.idToken)
+        } catch (error) {
+            return {}
+        }
     }
 
     /**

@@ -15,6 +15,7 @@ class Callback extends React.Component {
         if (!location.hash) {
             history.replace('/')
         }
+        // parse URL hash and persist tokens
         auth.parseHash(window.location.hash)
             .then((hash) => {
                 // expiryTime is now + expiry time
