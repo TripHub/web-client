@@ -1,16 +1,15 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import { Link } from 'react-router-dom'
-import classnames from 'classnames'
 
-import { IconButton, Button } from '../button'
+import { Button } from '../button'
 
 const Nav = ({ profile, trip }) => {
     return (
         <nav className='navbar navbar-light bg-light justify-content-between'>
             {
                 trip
-                    ? <span className='nav-item'>{trip.title}</span>
+                    ? <strong className='nav-item'>{trip.title}</strong>
                     : <Link className='navbar-brand nav-item nav-link' to='/'>TripHub</Link>
             }
             <div className='d-flex'>
@@ -27,6 +26,7 @@ const Nav = ({ profile, trip }) => {
                     <div
                         aria-labelledby='settings.dropdown'
                         className='dropdown-menu'
+                        style={{ left: 'auto', right: 0 }}
                     >
                         <Link to='/create' className='dropdown-item'>Create Trip</Link>
                         <div className='dropdown-divider' />
@@ -37,16 +37,17 @@ const Nav = ({ profile, trip }) => {
                 <div className='dropdown'>
                     <Button
                         iconRight
-                        id='profile.dropdown'
                         icon='arrow-dropdown'
+                        id='profile.dropdown'
                         className='nav-link btn-link'
                         data-toggle='dropdown'
                     >
-                        {profile.nickname || profile.name || profile.email}
+                        Profile
                     </Button>
                     <div
                         aria-labelledby='profile.dropdown'
                         className='dropdown-menu'
+                        style={{ left: 'auto', right: 0 }}
                     >
                         <Link to='#' className='dropdown-item'>Profile</Link>
                         <Link to='#' className='dropdown-item'>Account</Link>
@@ -62,7 +63,7 @@ const Nav = ({ profile, trip }) => {
 Nav.propTypes = {
     trip: shape({
         title: string
-    }).isRequired,
+    }),
     profile: shape({
         nickname: string,
         name: string,

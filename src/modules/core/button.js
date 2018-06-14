@@ -8,7 +8,7 @@ const Icon = styled.div`
     height: 1px;
     overflow: visible;
     top: 1px;
-    margin: ${props => props.iconRight ? '0 0 0 3px' : '0 3px 0 0'};
+    margin: ${props => props.iconRight ? '0 0 0 3px' : '0 8px 0 0'};
 `
 
 /**
@@ -30,6 +30,7 @@ export const Button = ({ to, iconRight, icon, size, children, className, ...prop
     const buttonEl = (
         <button
             className={classnames('btn', 'd-flex', className)}
+            type='button'
             {...props}
         >
             {

@@ -11,16 +11,14 @@ import './static/css/bootstrap.min.css'
 // redux store
 const store = createStore()
 
-class App extends React.Component {
-    render () {
-        return (
-            <Provider store={store}>
-                <React.Fragment>
-                    <OnLoad />
-                    <Routes />
-                </React.Fragment>
-            </Provider>
-        )
-    }
+const App = () => {
+    return (
+        <Provider store={store}>
+            <React.Fragment>
+                <OnLoad />
+                <Routes />
+            </React.Fragment>
+        </Provider>
+    )
 }
 export default App

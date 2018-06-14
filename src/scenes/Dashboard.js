@@ -44,7 +44,15 @@ class Dashboard extends React.Component {
 
         return (
             <Layout>
-                <Sidebar />
+                <Sidebar locations={[
+                    {
+                        title: 'London',
+                        lat: 52.2057,
+                        lng: 1.100048,
+                        id: 4,
+                        pid: 'af8238rtsj'
+                    }
+                ]} />
                 <Main>
                     <Nav profile={this.props.profile} trip={trip} />
                 </Main>
