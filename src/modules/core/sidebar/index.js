@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { string } from 'prop-types'
+import { Link } from 'react-router-dom'
+// import { shape, string } from 'prop-types'
 
 const Background = styled.div`
     display: flex;
@@ -12,10 +13,16 @@ const Background = styled.div`
     color: white;
 `
 
-const Sidebar = () => {
+const Brand = styled.h4`
+    color: white;
+`
+
+const Sidebar = ({ trip }) => {
     return (
         <Background>
-            <strong>TripHub</strong>
+            <Link to='/'>
+                <Brand>TripHub</Brand>
+            </Link>
         </Background>
     )
 }

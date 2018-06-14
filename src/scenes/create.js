@@ -16,7 +16,8 @@ class Create extends React.Component {
     }
 
     state = {
-        title: ''
+        title: '',
+        description: ''
     }
 
     handleChange = (name) => (e) => {
@@ -27,7 +28,8 @@ class Create extends React.Component {
         const { history } = this.props
         e.preventDefault()
         this.actions.create({
-            title: this.state.title
+            title: this.state.title,
+            description: this.state.description
         })
             .then(trip => history.push(`/${trip.id}`))
             .catch(console.error)
@@ -36,11 +38,12 @@ class Create extends React.Component {
     render () {
         return (
             <React.Fragment>
-                <Nav />
+                <Nav profile={this.props.profile} />
                 <div className='container'>
                     <CreateForm
                         values={{
-                            title: this.state.title
+                            title: this.state.title,
+                            description: this.state.description
                         }}
                         actions={{
                             onSubmit: this.onSubmit,
@@ -53,4 +56,4 @@ class Create extends React.Component {
     }
 }
 
-export default connect()(withAuth(Create))
+export default connect(s => s)(withAuth(Create))

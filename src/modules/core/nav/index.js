@@ -5,33 +5,54 @@ import classnames from 'classnames'
 
 import { IconButton, Button } from '../button'
 
-const Nav = ({ profile }) => {
+const Nav = ({ profile, trip }) => {
     return (
-        <nav className='navbar navbar-light bg-light'>
-            <IconButton
-                to='/create'
-                className='btn-link'
-                icon='add'
-            />
-            <div className='dropdown'>
-                <Button
-                    iconRight
-                    id='profile.dropdown'
-                    icon='arrow-dropdown'
-                    className='nav-link btn-link'
-                    data-toggle='dropdown'
-                    aria-haspopup='true'
-                >
-                    {profile.nickname || profile.name || profile.email}
-                </Button>
-                <div
-                    aria-labelledby='profile.dropdown'
-                    className={classnames('dropdown-menu')}
-                >
-                    <Link to='#' className='dropdown-item'>Profile</Link>
-                    <Link to='#' className='dropdown-item'>Settings</Link>
-                    <div className='dropdown-divider' />
-                    <Link to='/logout' className='dropdown-item'>Logout</Link>
+        <nav className='navbar navbar-light bg-light justify-content-between'>
+            {
+                trip
+                    ? <span className='nav-item'>{trip.title}</span>
+                    : <Link className='navbar-brand nav-item nav-link' to='/'>TripHub</Link>
+            }
+            <div className='d-flex'>
+                <div className='dropdown'>
+                    <Button
+                        iconRight
+                        icon='arrow-dropdown'
+                        id='settings.dropdown'
+                        className='nav-link btn-link'
+                        data-toggle='dropdown'
+                    >
+                        Settings
+                    </Button>
+                    <div
+                        aria-labelledby='settings.dropdown'
+                        className='dropdown-menu'
+                    >
+                        <Link to='/create' className='dropdown-item'>Create Trip</Link>
+                        <div className='dropdown-divider' />
+                        <Link to='#' className='dropdown-item'>Trip Settings</Link>
+                    </div>
+                </div>
+
+                <div className='dropdown'>
+                    <Button
+                        iconRight
+                        id='profile.dropdown'
+                        icon='arrow-dropdown'
+                        className='nav-link btn-link'
+                        data-toggle='dropdown'
+                    >
+                        {profile.nickname || profile.name || profile.email}
+                    </Button>
+                    <div
+                        aria-labelledby='profile.dropdown'
+                        className='dropdown-menu'
+                    >
+                        <Link to='#' className='dropdown-item'>Profile</Link>
+                        <Link to='#' className='dropdown-item'>Account</Link>
+                        <div className='dropdown-divider' />
+                        <Link to='/logout' className='dropdown-item'>Logout</Link>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -39,6 +60,9 @@ const Nav = ({ profile }) => {
 }
 
 Nav.propTypes = {
+    trip: shape({
+        title: string
+    }).isRequired,
     profile: shape({
         nickname: string,
         name: string,

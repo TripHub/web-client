@@ -40,12 +40,13 @@ class Dashboard extends React.Component {
             return <NotFound />
         }
 
+        const trip = trips.entities[this.id]
+
         return (
             <Layout>
                 <Sidebar />
                 <Main>
-                    <Nav profile={this.props.profile} />
-                    <h1>{trips.entities[this.id].title}</h1>
+                    <Nav profile={this.props.profile} trip={trip} />
                 </Main>
             </Layout>
         )

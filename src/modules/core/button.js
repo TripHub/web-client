@@ -46,8 +46,11 @@ export const Button = ({ to, iconRight, icon, size, children, className, ...prop
 }
 
 const IconContainer = styled.div`
+    display: flex;
+    align-items: center;
     position: relative;
-    top: 2px;
+    height: 100%;
+    top: -2px;
     padding: 0;
 `
 
