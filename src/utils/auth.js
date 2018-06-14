@@ -35,6 +35,20 @@ export default class Auth {
     }
 
     /**
+     * Removes tokens from storage.
+     */
+    static destroy () {
+        window.localStorage.removeItem(Auth.accessTokenName)
+        window.localStorage.removeItem(Auth.expiryTimeName)
+        window.localStorage.removeItem(Auth.idTokenName)
+    }
+
+    /**
+     * Alias for destroy.
+     */
+    static logout = Auth.destroy
+
+    /**
      * Get the access token from storage.
      */
     static get accessToken () {

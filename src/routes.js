@@ -7,6 +7,7 @@ import {
 
 // Auth
 import Login from './scenes/auth/login'
+import Logout from './scenes/auth/logout'
 import Callback from './scenes/auth/callback'
 // Dashboard
 import Home from './scenes/home'
@@ -17,6 +18,7 @@ export default () => (
     <Router>
         <Switch>
             <Route path='/login' component={Login} />
+            <Route path='/logout' component={Logout} />
             <Route path='/callback' component={Callback} />
             
             <Route exact path='/' component={Home} />

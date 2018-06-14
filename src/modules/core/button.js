@@ -12,7 +12,7 @@ const Icon = styled.div`
 `
 
 /**
- * Button with icon support. 
+ * Button with icon and link support. 
  */
 export const Button = ({ to, iconRight, icon, size, children, className, ...props }) => {
     const iconEl = icon

@@ -1,12 +1,11 @@
 import React from 'react'
-import { func, string, shape } from 'prop-types'
+import { string, shape } from 'prop-types'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
-import Popper from 'popper.js'
 
 import { IconButton, Button } from '../button'
 
-const Nav = ({ profile, actions }) => {
+const Nav = ({ profile }) => {
     return (
         <nav className='navbar navbar-light bg-light'>
             <IconButton
@@ -40,9 +39,6 @@ const Nav = ({ profile, actions }) => {
 }
 
 Nav.propTypes = {
-    actions: shape({
-        onLogout: func.isRequired
-    }).isRequired,
     profile: shape({
         nickname: string,
         name: string,
