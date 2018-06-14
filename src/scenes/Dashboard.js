@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 
 import { withAuth } from '../enhancers/auth'
 import NotFound from '../modules/core/error/notFound'
+import { Layout, Main } from '../modules/core/layout'
 import Nav from '../modules/core/nav'
+import Sidebar from '../modules/core/sidebar'
 
 import trips from '../modules/trips'
 
@@ -29,7 +31,6 @@ class Dashboard extends React.Component {
 
     render () {
         const { trips } = this.props
-        console.log('entity', trips.entities[this.id])
 
         if (trips.loading) {
             return <p>Loading...</p>
@@ -40,10 +41,13 @@ class Dashboard extends React.Component {
         }
 
         return (
-            <React.Fragment>
-                <Nav />
-                <h1>{trips.entities[this.id].title}</h1>
-            </React.Fragment>
+            <Layout>
+                <Sidebar />
+                <Main>
+                    <Nav profile={this.props.profile} />
+                    <h1>{trips.entities[this.id].title}</h1>
+                </Main>
+            </Layout>
         )
     }
 }

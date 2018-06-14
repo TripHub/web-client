@@ -23,7 +23,7 @@ class Home extends React.Component {
 
         return (
             <React.Fragment>
-                <Nav />
+                <Nav profile={this.props.profile} />
                 <main className='container'>
                     <List
                         order={trips.order}
@@ -35,6 +35,6 @@ class Home extends React.Component {
     }
 }
 
-const mapStateToProps = ({ trips }) => ({ trips })
+const mapStateToProps = state => state
 
 export default connect(mapStateToProps)(withAuth(Home))
