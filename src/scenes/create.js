@@ -1,11 +1,56 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import { withAuth } from '../enhancers/auth'
+import CreateForm from '../modules/trips/components/createForm'
+import Nav from '../modules/core/nav'
+import trips from '../modules/trips'
 
 class Create extends React.Component {
+    constructor (props) {
+        super(props)
+        const { dispatch } = props
+
+        this.actions = bindActionCreators(trips.actions, dispatch)
+    }
+
+    state = {
+        title: ''
+    }
+
+    handleChange = (name) => (e) => {
+        this.setState({ [name]: e.target.value })
+    }
+
+    onSubmit = (e) => {
+        const { history } = this.props
+        e.preventDefault()
+        this.actions.create({
+            title: this.state.title
+        })
+            .then(trip => history.push(`/${trip.id}`))
+            .catch(console.error)
+    }
+
     render () {
         return (
-            <div>Create Trip</div>
+            <React.Fragment>
+                <Nav />
+                <div className='container'>
+                    <CreateForm
+                        values={{
+                            title: this.state.title
+                        }}
+                        actions={{
+                            onSubmit: this.onSubmit,
+                            onChange: this.handleChange
+                        }}
+                    />
+                </div>
+            </React.Fragment>
         )
     }
 }
 
-export default Create
+export default connect()(withAuth(Create))
