@@ -12,7 +12,8 @@ import Callback from './scenes/auth/callback'
 // Dashboard
 import Home from './scenes/home'
 import Create from './scenes/create'
-import Dashboard from './scenes/dashboard'
+import Overview from './scenes/dashboard/overview'
+import Location from './scenes/dashboard/location'
 
 export default () => (
     <Router>
@@ -23,7 +24,8 @@ export default () => (
             
             <Route exact path='/' component={Home} />
             <Route path='/create' component={Create} />
-            <Route path='/:id' component={Dashboard} />
+            <Route path='/:id/:location' component={Location} />
+            <Route path='/:id' component={Overview} />
         </Switch>
     </Router>
 )

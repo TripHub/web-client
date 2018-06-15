@@ -18,6 +18,8 @@ const Brand = styled.h4`
     margin: 0 0 40px;
     padding: 15px;
     color: white;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.06);
 `
 
 const Icon = styled.div`

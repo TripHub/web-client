@@ -2,15 +2,15 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { withAuth } from '../enhancers/auth'
-import NotFound from '../modules/core/error/notFound'
-import { Layout, Main } from '../modules/core/layout'
-import Nav from '../modules/core/nav'
-import Sidebar from '../modules/core/sidebar'
+import { withAuth } from '../../enhancers/auth'
+import NotFound from '../../modules/core/error/notFound'
+import { Layout, Main } from '../../modules/core/layout'
+import Nav from '../../modules/core/nav'
+import Sidebar from '../../modules/core/sidebar'
 
-import trips from '../modules/trips'
+import trips from '../../modules/trips'
 
-class Dashboard extends React.Component {
+class Overview extends React.Component {
     constructor (props) {
         super(props)
         const { dispatch } = props
@@ -63,4 +63,4 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(withAuth(Dashboard))
+export default connect(mapStateToProps)(withAuth(Overview))

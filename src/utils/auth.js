@@ -97,7 +97,7 @@ export default class Auth {
     /**
      * Redirect to Auth0 login page.
      */
-    login () {
-        this.auth0.authorize()
+    login (config = {}) {
+        this.auth0.authorize(config)
     }
 }
