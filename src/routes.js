@@ -9,6 +9,8 @@ import {
 import Login from './scenes/auth/login'
 import Logout from './scenes/auth/logout'
 import Callback from './scenes/auth/callback'
+// Magic links
+import JoinTrip from './scenes/magicLinks/joinTrip'
 // Global
 import Home from './scenes/home'
 import Create from './scenes/create'
@@ -23,9 +25,12 @@ export default () => (
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/callback' component={Callback} />
+
+            <Route path='/ml/join' component={JoinTrip} />
             
             <Route exact path='/' component={Home} />
             <Route path='/create' component={Create} />
+
             <Route path='/:id/settings' component={Settings} />
             <Route path='/:id/:location' component={Location} />
             <Route path='/:id' component={Overview} />

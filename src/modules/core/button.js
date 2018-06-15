@@ -46,28 +46,4 @@ export const Button = ({ to, iconRight, icon, size, children, className, ...prop
         : buttonEl
 }
 
-const IconContainer = styled.div`
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 100%;
-    top: -2px;
-    padding: 0;
-`
-
-/**
- * Single icon with no text.
- */
-export const IconButton = ({ to, icon, size, ...props }) => {
-    const iconEl = (
-        <IconContainer>
-            <ion-icon icon={icon} size={size || 'small'} />
-        </IconContainer>
-    )
-
-    return to
-        ? <Link to={to}>{iconEl}</Link>
-        : iconEl
-}
-
 export default Button
