@@ -2,59 +2,49 @@ import React from 'react'
 import { string, shape } from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { Button } from '../button'
+import Icon from '../icon'
+import DropdownLink from './components/dropdownLink'
 
 const Nav = ({ profile, trip }) => {
+    const tripExists = trip && trip.id
+
+    const tripDropdown = tripExists
+        ? (
+            <DropdownLink button={<Icon name='settings' />}>
+                <Link to={`/${trip.id}/settings`} className='dropdown-item'>
+                    Trip Settings
+                </Link>
+            </DropdownLink>
+        ) : null
+
+    const createDropdown = (
+        <DropdownLink button={<Icon name='add' />}>
+            <Link to='/create' className='dropdown-item'>Create Trip</Link>
+        </DropdownLink>
+    )
+
+    const profileDropdown = (
+        <DropdownLink button={<Icon name='person' />}>
+            <React.Fragment>
+                <Link to='#' className='dropdown-item'>Profile</Link>
+                <Link to='#' className='dropdown-item'>Account</Link>
+                <div className='dropdown-divider' />
+                <Link to='/logout' className='dropdown-item'>Logout</Link>
+            </React.Fragment>
+        </DropdownLink>
+    )
+
     return (
         <nav className='navbar navbar-light bg-light justify-content-between'>
             {
-                trip
+                tripExists
                     ? <strong className='nav-item'>{trip.title}</strong>
                     : <Link className='navbar-brand nav-item nav-link' to='/'>TripHub</Link>
             }
             <div className='d-flex'>
-                <div className='dropdown'>
-                    <Button
-                        iconRight
-                        icon='arrow-dropdown'
-                        id='settings.dropdown'
-                        className='nav-link btn-link'
-                        data-toggle='dropdown'
-                    >
-                        Settings
-                    </Button>
-                    <div
-                        aria-labelledby='settings.dropdown'
-                        className='dropdown-menu'
-                        style={{ left: 'auto', right: 0 }}
-                    >
-                        <Link to='/create' className='dropdown-item'>Create Trip</Link>
-                        <div className='dropdown-divider' />
-                        <Link to='#' className='dropdown-item'>Trip Settings</Link>
-                    </div>
-                </div>
-
-                <div className='dropdown'>
-                    <Button
-                        iconRight
-                        icon='arrow-dropdown'
-                        id='profile.dropdown'
-                        className='nav-link btn-link'
-                        data-toggle='dropdown'
-                    >
-                        Profile
-                    </Button>
-                    <div
-                        aria-labelledby='profile.dropdown'
-                        className='dropdown-menu'
-                        style={{ left: 'auto', right: 0 }}
-                    >
-                        <Link to='#' className='dropdown-item'>Profile</Link>
-                        <Link to='#' className='dropdown-item'>Account</Link>
-                        <div className='dropdown-divider' />
-                        <Link to='/logout' className='dropdown-item'>Logout</Link>
-                    </div>
-                </div>
+                {tripDropdown}
+                {createDropdown}
+                {profileDropdown}
             </div>
         </nav>
     )

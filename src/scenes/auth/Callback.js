@@ -4,7 +4,6 @@
  */
 
 import React from 'react'
-import querystring from 'querystring'
 
 import Auth from '../../utils/auth'
 
@@ -16,8 +15,6 @@ class Callback extends React.Component {
         if (!location.hash) {
             history.replace('/')
         }
-        // parse returnTo from query
-        const qs = querystring.parse(location.search.slice(1))
         // parse URL hash and persist tokens
         auth.parseHash(window.location.hash)
             .then((hash) => {
@@ -36,7 +33,7 @@ class Callback extends React.Component {
                     history.replace('/')
                 }
             })
-            .catch(error => console.error(error))
+            .catch(console.error)
     }
 
     render () {

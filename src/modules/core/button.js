@@ -69,3 +69,5 @@ export const IconButton = ({ to, icon, size, ...props }) => {
         ? <Link to={to}>{iconEl}</Link>
         : iconEl
 }
+
+export default Button
