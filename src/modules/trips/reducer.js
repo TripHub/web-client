@@ -1,55 +1,27 @@
+import { combineReducers } from 'redux'
+import createReducer from 'atomic-reducer'
+
 import { types } from './actions'
 
-const initialState = {
-    entities: {},
-    order: [],
-    selected: null,
-    loading: false,
-    error: null,
-}
+const trips = createReducer({
+    request: types.TRIPS_LIST_REQUEST,
+    success: types.TRIPS_LIST_SUCCESS,
+    failure: types.TRIPS_LIST_FAILURE,
+    setOrder: types.TRIPS_SET_ORDER,
+    setSelected: types.TRIPS_SET_SELECTED,
+    setEntity: types.TRIPS_GET_SUCCESS,
+})
 
-export default (state = initialState, action) => {
-    switch (action.type) {
-        case types.LIST_REQUEST:
-            return { ...state, loading: true }
-        case types.LIST_SUCCESS:
-            return {
-                ...state,
-                order: action.payload.result,
-                entities: action.payload.entities.trips || {},
-                loading: false
-            }
+const locations = createReducer({
+    success: types.SET_LOCATIONS,
+})
 
-        case types.GET_REQUEST:
-            return { ...state, loading: true }
-        case types.GET_SUCCESS:
-            return {
-                ...state,
-                entities: {
-                    ...state.entities,
-                    [action.payload.id]: action.payload
-                },
-                order: [action.payload.id, ...state.order],
-                loading: false
-            }
-        case types.GET_FAILURE:
-            return { ...state, loading: false }
-        
-        case types.CREATE_REQUEST:
-            return { ...state, loading: true }
-        // add response to entities
-        case types.CREATE_SUCCESS:
-            return {
-                ...state,
-                entities: {
-                    ...state.entities,
-                    [action.payload.id]: action.payload
-                },
-                order: [action.payload.id, ...state.order],
-                loading: false
-            }
-        
-        default:
-            return state
-    }
-}
+const members = createReducer({
+    success: types.SET_MEMBERS,
+})
+
+export default combineReducers({
+    trips,
+    locations,
+    members,
+})

@@ -4,16 +4,13 @@ import { connect } from 'react-redux'
 
 import { withAuth } from '../../enhancers/auth'
 import NotFound from '../../modules/core/error/notFound'
-import { Layout, Main } from '../../modules/core/layout'
-import Nav from '../../modules/core/nav'
-import Sidebar from '../../modules/core/sidebar'
-
 import trips from '../../modules/trips'
 
 class Overview extends React.Component {
     constructor (props) {
         super(props)
         const { dispatch } = props
+        
         this.actions = bindActionCreators(trips.actions, dispatch)
     }
 
@@ -23,14 +20,13 @@ class Overview extends React.Component {
     }
 
     componentDidMount () {
-        // load trip if not already in state
-        if (!this.props.trips.entities[this.id]) {
-            this.actions.get(this.id)
-        }
+        const { trips } = this.props
+        this.actions.get(this.id)
+            .then(() => this.actions.setSelected(this.id))
     }
 
     render () {
-        const { trips } = this.props
+        const { trips, locations, members } = this.props
 
         if (trips.loading) {
             return <p>Loading...</p>
@@ -39,28 +35,21 @@ class Overview extends React.Component {
         if (!trips.entities[this.id]) {
             return <NotFound />
         }
-
+        
         const trip = trips.entities[this.id]
 
         return (
-            <Layout>
-                <Sidebar locations={[
-                    {
-                        title: 'London',
-                        lat: 52.2057,
-                        lng: 1.100048,
-                        id: 4,
-                        pid: 'af8238rtsj'
-                    }
-                ]} />
-                <Main>
-                    <Nav profile={this.props.profile} trip={trip} />
-                </Main>
-            </Layout>
+            <div>
+                {trip.title} overview
+            </div>
         )
     }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({
+    trips: trips.selectors.tripsSelector(state),
+    locations: trips.selectors.locationsSelector(state),
+    members: trips.selectors.membersSelector(state),
+})
 
 export default connect(mapStateToProps)(withAuth(Overview))

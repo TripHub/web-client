@@ -4,9 +4,13 @@ import { connect } from 'react-redux'
 import { withAuth } from '../../enhancers/auth'
 
 class Settings extends React.Component {
-  render () {
-    return <div>Settings</div>
-  }
+    render () {
+        return (
+            <div>Settings {this.tripId}</div>
+        )
+    }
 }
 
-export default connect()(withAuth(Settings))
+const mapStateToProps = state => state
+
+export default connect(mapStateToProps)(withAuth(Settings))

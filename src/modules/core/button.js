@@ -11,6 +11,12 @@ const Icon = styled.div`
     margin: ${props => props.iconRight ? '0 0 0 3px' : '0 8px 0 0'};
 `
 
+const UndecoratedLink = styled(Link)`
+    :hover {
+        text-decoration: none;
+    }
+`
+
 /**
  * Button with icon and link support. 
  */
@@ -42,7 +48,7 @@ export const Button = ({ to, iconRight, icon, size, children, className, ...prop
     )
 
     return to
-        ? <Link to={to}>{buttonEl}</Link>
+        ? <UndecoratedLink to={to}>{buttonEl}</UndecoratedLink>
         : buttonEl
 }
 

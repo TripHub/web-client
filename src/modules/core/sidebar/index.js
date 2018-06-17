@@ -1,7 +1,7 @@
 import React from 'react'
+import { arrayOf, shape, string, number } from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { arrayOf, shape, string, number } from 'prop-types'
 
 import SidebarLink from './components/link'
 
@@ -12,6 +12,12 @@ const Background = styled.div`
     width: 100%;
     max-width: 220px;
     background: dodgerblue;
+`
+
+const UndecoratedLink = styled(Link)`
+    :hover {
+        text-decoration: none;
+    }
 `
 
 const Brand = styled.h4`
@@ -46,15 +52,23 @@ const SectionBody = styled.section`
     margin: 0;
 `
 
-const Sidebar = ({ locations }) => {
+const Sidebar = ({ trip, locations }) => {
+    const locationsList = locations.map(location => {
+        return (
+            <SidebarLink to='#' key={location.id}>
+                {location.title}
+            </SidebarLink>
+        )
+    })
+
     return (
         <Background>
-            <Link to='/'>
+            <UndecoratedLink to='/'>
                 <Brand>TripHub</Brand>
-            </Link>
+            </UndecoratedLink>
 
             <Section>
-                <SectionHeading>Your Trip</SectionHeading>
+                <SectionHeading>My Trip</SectionHeading>
                 <SectionBody>
                     <SidebarLink to='#'>
                         <Icon>
@@ -75,14 +89,24 @@ const Sidebar = ({ locations }) => {
                 <SectionHeading>Locations</SectionHeading>
                 <SectionBody>
                     {
+                        trip &&
+                        locations &&
                         locations.map(location => {
                             return (
-                                <SidebarLink to='#' key={location.id}>
+                                <SidebarLink
+                                    to={`/${trip.id}/${location.id}`}
+                                    key={location.id}
+                                >
                                     {location.title}
                                 </SidebarLink>
                             )
                         })
                     }
+                    {
+                        trip &&
+                        <SidebarLink to={`/${trip.id}/add-location`}>
+                            Add location
+                        </SidebarLink>}
                 </SectionBody>
             </Section>
         </Background>
@@ -90,13 +114,16 @@ const Sidebar = ({ locations }) => {
 }
 
 Sidebar.propTypes = {
+    trip: shape({
+        id: number.isRequired
+    }),
     locations: arrayOf(shape({
         id: number.isRequired,
         pid: string.isRequired,
         title: string.isRequired,
         lat: number.isRequired,
         lng: number.isRequired
-    })).isRequired
+    }))
 }
 
 export default Sidebar

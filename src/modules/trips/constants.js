@@ -1,2 +1,2 @@
 // module name
-export const NAME = 'trips'
+export const NAME = 'trip'

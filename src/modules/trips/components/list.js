@@ -13,7 +13,12 @@ const List = ({ order, entities }) => {
                             className='list-group-item list-group-item-action'
                             to={`/${id}`}
                             key={id}
-                        >{trip.title}</Link>
+                        >
+                            <div>
+                                <strong>{trip.title}</strong>
+                                <small>{trip.description}</small>
+                            </div>
+                        </Link>
                     )
                 })
             }

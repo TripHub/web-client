@@ -1,9 +1,14 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import Icon from '../icon'
 import DropdownLink from './components/dropdownLink'
+
+const Navbar = styled.nav`
+    flex-shrink: 0;
+`
 
 const Nav = ({ profile, trip }) => {
     const tripExists = trip && trip.id
@@ -35,7 +40,7 @@ const Nav = ({ profile, trip }) => {
     )
 
     return (
-        <nav className='navbar navbar-light bg-light justify-content-between'>
+        <Navbar className='navbar navbar-light bg-light justify-content-between'>
             {
                 tripExists
                     ? <strong className='nav-item'>{trip.title}</strong>
@@ -46,7 +51,7 @@ const Nav = ({ profile, trip }) => {
                 {createDropdown}
                 {profileDropdown}
             </div>
-        </nav>
+        </Navbar>
     )
 }
 
@@ -58,7 +63,7 @@ Nav.propTypes = {
         nickname: string,
         name: string,
         email: string.isRequired
-    }).isRequired
+    })
 }
 
 export default Nav

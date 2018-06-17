@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { withAuth } from '../enhancers/auth'
-import Nav from '../modules/core/nav'
 import trips from '../modules/trips'
 import List from '../modules/trips/components/list'
 
@@ -22,19 +21,18 @@ class Home extends React.Component {
         const { trips } = this.props
 
         return (
-            <React.Fragment>
-                <Nav profile={this.props.profile} />
-                <main className='container'>
-                    <List
-                        order={trips.order}
-                        entities={trips.entities}
-                    />
-                </main>
-            </React.Fragment>
+            <main className='container'>
+                <List
+                    order={trips.order}
+                    entities={trips.entities}
+                />
+            </main>
         )
     }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({
+    trips: trips.selectors.tripsSelector(state)
+})
 
 export default connect(mapStateToProps)(withAuth(Home))

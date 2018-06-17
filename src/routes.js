@@ -5,6 +5,8 @@ import {
     Route
 } from 'react-router-dom'
 
+import { withNav, withNavSidebar } from './enhancers/layout'
+
 // Auth
 import Login from './scenes/auth/login'
 import Logout from './scenes/auth/logout'
@@ -15,6 +17,7 @@ import JoinTrip from './scenes/magicLinks/joinTrip'
 import Home from './scenes/home'
 import Create from './scenes/create'
 // Dashboard
+import TripFrame from './modules/trips/components/frame'
 import Settings from './scenes/dashboard/settings'
 import Overview from './scenes/dashboard/overview'
 import Location from './scenes/dashboard/location'
@@ -28,12 +31,16 @@ export default () => (
 
             <Route path='/ml/join' component={JoinTrip} />
             
-            <Route exact path='/' component={Home} />
-            <Route path='/create' component={Create} />
+            <Route exact path='/' component={withNav(Home)} />
+            <Route path='/create' component={withNav(Create)} />
 
-            <Route path='/:id/settings' component={Settings} />
-            <Route path='/:id/:location' component={Location} />
-            <Route path='/:id' component={Overview} />
+            <TripFrame>
+                <Switch>
+                    <Route path='/:id/settings' component={Settings} />
+                    <Route path='/:id/:location' component={Location} />
+                    <Route path='/:id' component={Overview} />
+                </Switch>
+            </TripFrame>
         </Switch>
     </Router>
 )
