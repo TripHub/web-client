@@ -14,6 +14,10 @@ export const types = {
     SET_LOCATIONS: `${NAME}/SET_LOCATIONS`,
     SET_MEMBERS: `${NAME}/SET_MEMBERS`,
 
+    LOCATIONS_CREATE_REQUEST: `${NAME}/LOCATIONS_CREATE_REQUEST`,
+    LOCATIONS_CREATE_SUCCESS: `${NAME}/LOCATIONS_CREATE_SUCCESS`,
+    LOCATIONS_CREATE_FAILURE: `${NAME}/LOCATIONS_CREATE_FAILURE`,
+
     TRIPS_GET_REQUEST: `${NAME}/TRIPS_GET_REQUEST`,
     TRIPS_GET_SUCCESS: `${NAME}/TRIPS_GET_SUCCESS`,
     TRIPS_GET_FAILURE: `${NAME}/TRIPS_GET_FAILURE`,
@@ -26,6 +30,9 @@ export const types = {
 const listRequest = () => ({ type: types.TRIPS_LIST_REQUEST })
 const listSuccess = payload => ({ type: types.TRIPS_LIST_SUCCESS, payload })
 const listFailure = payload => ({ type: types.TRIPS_LIST_FAILURE, payload, error: true })
+const locationCreateRequest = () => ({ type: types.LOCATIONS_CREATE_REQUEST })
+const locationCreateSuccess = payload => ({ type: types.LOCATIONS_CREATE_SUCCESS, payload })
+const locationCreateFailure = payload => ({ type: types.LOCATIONS_CREATE_FAILURE, payload, error: true })
 const listSetOrder = payload => ({ type: types.TRIPS_SET_ORDER, payload })
 const listSetLocations = payload => ({ type: types.SET_LOCATIONS, payload })
 const listSetMembers = payload => ({ type: types.SET_MEMBERS, payload })
@@ -104,4 +111,16 @@ export const create = (data) => (dispatch) => {
             reject(error)
         }
     })
+}
+
+/**
+ * Creates a location for a specific trip.
+ * @param {number} tripId id of trip to create location for
+ * @param {object} data object containing location data
+ */
+export const createLocation = (tripId, data) => (dispatch) => {
+    dispatch(locationCreateRequest())
+    return api().post(`/trips/${tripId}/locations`, data)
+        .then(res => dispatch(locationCreateSuccess(res.data)))
+        .catch(err => dispatch(locationCreateFailure(err)))
 }

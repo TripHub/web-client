@@ -2,7 +2,6 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { withAuth } from '../../enhancers/auth'
 import { withTripDetail } from '../../enhancers/load'
 import CreateForm from '../../modules/trips/components/createForm'
 import trips from '../../modules/trips'
@@ -53,4 +52,4 @@ class Create extends React.Component {
     }
 }
 
-export default connect(s => s)(withAuth(withTripDetail(Create)))
+export default connect(s => s)(withTripDetail(Create))

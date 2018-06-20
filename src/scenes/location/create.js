@@ -1,34 +1,64 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import debounce from 'lodash.debounce'
 
 import api from '../../utils/api'
 import { withTripDetail } from '../../enhancers/load'
 import { NavSidebarFrame } from '../../modules/core/frame'
+import trips from '../../modules/trips'
 import CreateForm from '../../modules/locations/components/createForm'
 
 class Create extends React.Component {
     state = {
+        searchText: '',
         selected: null,
+        suggestions: [],
         loading: false
     }
 
-    handleSelect = selected => this.setState({ selected })
+    timer = null
+
+    handleSelect = (selected) => {
+        this.setState({
+            searchText: '',
+            suggestions: [],
+            selected,
+        })
+    }
+    
+    onInputChange = (searchText, { action }) => {
+        if (action === 'input-change') {
+            this.setState({
+                searchText
+            }, () => {
+                this.callPlaceApi(this.state.searchText)
+                    .then(suggestions => this.setState({ suggestions }))
+                    .then(() => this.setState({ loading: false }))
+            })
+        }
+        
+    }
     
     callPlaceApi = (query) => {
+        // start loading ui
         this.setState({ loading: true })
+        // clear existing timers
+        if (this.timer) {
+            window.clearTimeout(this.timer)
+        }
+        // return promise
         return new Promise((resolve, reject) => {
-            return api().get(`/places/search`, {
-                params: {
-                    fields: 'formatted_address,name,id,geometry',
-                    query,
-                }
-            })
-                .then(res => resolve(res.data))
-                .catch(() => resolve([]))
-                
-                .then(() => this.setState({ loading: false }))
+            // start new timer (debounce)
+            this.timer = window.setTimeout(query => {
+                api().get(`/places/search`, {
+                    params: {
+                        fields: 'id,formatted_address,name,geometry',
+                        query,
+                    }
+                })
+                    .then(res => resolve(res.data))
+                    .catch(() => resolve([]))
+            }, 500, query)
         })
     }
 
@@ -47,11 +77,18 @@ class Create extends React.Component {
 
     onSubmit = e => {
         e.preventDefault()
-        if (this.isFormValid()) {
-            console.log('valid!', 'send', this.state.selected)
-        } else {
-            console.log('invalid!', 'send nothing')
+        if (!this.isFormValid()) {
+            return console.error('invalid location data', this.state.selected)
         }
+
+        const { history, activeTrip, actions } = this.props
+        const { name, geometry } = this.state.selected
+        actions.createLocation(activeTrip.id, {
+            title: name,
+            lat: geometry.location.lat,
+            lng: geometry.location.lng,
+        })
+            .then(() => history.push(`/${activeTrip.id}`))
     }
 
     render () {
@@ -65,9 +102,10 @@ class Create extends React.Component {
                         }}
                         values={{
                             selected: this.state.selected,
+                            suggestions: this.state.suggestions,
                         }}
                         actions={{
-                            onSearch: this.callPlaceApi,
+                            onInputChange: this.onInputChange,
                             onSelect: this.handleSelect,
                             onSubmit: this.onSubmit,
                             onCancel: console.log,
@@ -79,4 +117,12 @@ class Create extends React.Component {
     }
 }
 
-export default connect()(withTripDetail(Create))
+const mapStateToProps = state => ({
+    activeTrip: trips.selectors.activeTripSelector(state),
+})
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(trips.actions, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTripDetail(Create))

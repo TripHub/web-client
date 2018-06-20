@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { withAuth } from '../../enhancers/auth'
-
 class Settings extends React.Component {
     render () {
         return (
@@ -13,4 +11,4 @@ class Settings extends React.Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(withAuth(Settings))
+export default connect(mapStateToProps)(Settings)

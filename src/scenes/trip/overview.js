@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { NotFound } from '../../modules/core/error'
 import { NavSidebarFrame } from '../../modules/core/frame'
 import { withTripDetail } from '../../enhancers/load'
-import { withAuth } from '../../enhancers/auth'
 import trips from '../../modules/trips'
 
 class Overview extends React.Component {
@@ -41,4 +40,4 @@ const mapStateToProps = state => ({
     members: trips.selectors.membersSelector(state),
 })
 
-export default connect(mapStateToProps)(withAuth(withTripDetail(Overview)))
+export default connect(mapStateToProps)(withTripDetail(Overview))

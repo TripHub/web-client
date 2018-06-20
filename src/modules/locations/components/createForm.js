@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { func, shape } from 'prop-types'
-import { components } from 'react-select'
-import Async from 'react-select/lib/Async'
+import Select, { components } from 'react-select'
 
 import Button from '../../core/button'
 
@@ -46,19 +45,22 @@ const CreateForm = ({ loading, form, values, actions }) => {
             <div className='card-body'>
                 <div className='form-group'>
                     <label htmlFor={`${id}.search`}>Search for a place</label>
-                    <Async
+                    <Select
                         isClearable
-                        isLoading={loading}
                         id={`${id}.search`}
+                        isLoading={loading}
+                        inputValue={values.searchText}
+                        onInputChange={actions.onInputChange}
+                        options={values.suggestions}
+                        getOptionLabel={obj => [obj.name, obj.formatted_address]}
+                        getOptionValue={obj => obj.id}
                         components={{
                             Option: OptionComponent,
                             SingleValue: SingleValueComponent,
                         }}
-                        loadOptions={actions.onSearch}
+                        // loadOptions={actions.onSearch}
                         value={values.selected}
                         onChange={actions.onSelect}
-                        getOptionLabel={obj => [obj.name, obj.formatted_address]}
-                        getOptionValue={obj => obj.id}
                     />
                 </div>
 

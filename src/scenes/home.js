@@ -35,4 +35,4 @@ const mapStateToProps = state => ({
     trips: trips.selectors.tripsSelector(state)
 })
 
-export default connect(mapStateToProps)(withAuth(Home))
+export default connect(mapStateToProps)(Home)

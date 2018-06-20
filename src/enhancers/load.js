@@ -12,10 +12,11 @@ export function withTripDetail (Component) {
     return connect()(class extends React.Component {
         constructor (props) {
             super(props)
-            if (!props.match || !props.match.params.id) {
+            if (!props.match || !props.match.params.tid) {
                 console.error(
-                    'the `withTripDetail` enhancer requires the trip id to be in \
-                    the path params. Have you forgotten to add `:id` in routes?'
+                    'the `withTripDetail` enhancer requires the trip id to be \
+                    in the path params. Have you forgotten to add `:id` in \
+                    routes?'
                 )
             }
             this.actions = bindActionCreators(trip.actions, props.dispatch)
@@ -23,7 +24,12 @@ export function withTripDetail (Component) {
 
         get tripId () {
             // trip id is in path params
-            return this.props.match.params.id
+            const tid = this.props.match.params.tid
+            try {
+                return parseInt(tid, 10)
+            } catch (_) {
+                return tid
+            }
         }
         
         componentDidMount () {

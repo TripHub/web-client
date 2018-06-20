@@ -15,6 +15,7 @@ export function withAuth (Component) {
         }
 
         redirectIfNeeded () {
+            console.log(this.props)
             const { history, location } = this.props
 
             if (!this.state.isAuthenticated) {
