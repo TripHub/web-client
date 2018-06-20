@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect'
 
+import { NAME } from './constants'
+
 // module selector
-const moduleSelector = state => state.trip
+const moduleSelector = state => state[NAME]
 
 // entities selectors
 export const tripsSelector = state => moduleSelector(state).trips

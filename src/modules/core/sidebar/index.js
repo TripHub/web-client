@@ -104,7 +104,7 @@ const Sidebar = ({ trip, locations }) => {
                     }
                     {
                         trip &&
-                        <SidebarLink to={`/${trip.id}/add-location`}>
+                        <SidebarLink to={`/${trip.id}/location/new`}>
                             Add location
                         </SidebarLink>}
                 </SectionBody>

@@ -5,8 +5,8 @@ import {
     Route
 } from 'react-router-dom'
 
-import { withNav, withNavSidebar } from './enhancers/layout'
-
+// Errors
+import { NotFound } from './modules/core/error'
 // Auth
 import Login from './scenes/auth/login'
 import Logout from './scenes/auth/logout'
@@ -15,32 +15,32 @@ import Callback from './scenes/auth/callback'
 import JoinTrip from './scenes/magicLinks/joinTrip'
 // Global
 import Home from './scenes/home'
-import Create from './scenes/create'
-// Dashboard
-import TripFrame from './modules/trips/components/frame'
-import Settings from './scenes/dashboard/settings'
-import Overview from './scenes/dashboard/overview'
-import Location from './scenes/dashboard/location'
+import CreateTrip from './scenes/trip/create'
+// Trip
+import Settings from './scenes/trip/settings'
+import TripOverview from './scenes/trip/overview'
+import LocationOverview from './scenes/location/overview'
+import CreateLocation from './scenes/location/create'
 
 export default () => (
     <Router>
         <Switch>
-            <Route path='/login' component={Login} />
-            <Route path='/logout' component={Logout} />
-            <Route path='/callback' component={Callback} />
-
-            <Route path='/ml/join' component={JoinTrip} />
-            
-            <Route exact path='/' component={withNav(Home)} />
-            <Route path='/create' component={withNav(Create)} />
-
-            <TripFrame>
-                <Switch>
-                    <Route path='/:id/settings' component={Settings} />
-                    <Route path='/:id/:location' component={Location} />
-                    <Route path='/:id' component={Overview} />
-                </Switch>
-            </TripFrame>
+            {/* Auth Scenes */}
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/logout' component={Logout} />
+            <Route exact path='/callback' component={Callback} />
+            {/* Magic Links */}
+            <Route exact path='/ml/join' component={JoinTrip} />
+            {/* Global Scenes */}
+            <Route exact path='/' component={Home} />
+            <Route exact path='/create' component={CreateTrip} />
+            {/* Trip Scenes */}
+            <Route path='/:id/settings' component={Settings} />
+            <Route path='/:id/:location/new' component={CreateLocation} />
+            <Route path='/:id/:location' component={LocationOverview} />
+            <Route exact path='/:id' component={TripOverview} />
+            {/* Fallback */}
+            <Route component={NotFound} />
         </Switch>
     </Router>
 )
