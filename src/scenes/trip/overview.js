@@ -11,7 +11,7 @@ class Overview extends React.Component {
     constructor (props) {
         super(props)
         
-        this.actions = bindActionCreators(trips.actions, props.dispatch)
+        this.actions = bindActionCreators(trips.actions.trips, props.dispatch)
     }
 
     render () {

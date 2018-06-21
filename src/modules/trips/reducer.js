@@ -1,23 +1,24 @@
 import { combineReducers } from 'redux'
 import createReducer from 'atomic-reducer'
 
-import { types } from './actions'
+import { types as tripsTypes } from './actions/trips'
+import { types as locationsTypes } from './actions/locations'
 
 const trips = createReducer({
-    request: types.TRIPS_LIST_REQUEST,
-    success: types.TRIPS_LIST_SUCCESS,
-    failure: types.TRIPS_LIST_FAILURE,
-    setOrder: types.TRIPS_SET_ORDER,
-    setSelected: types.TRIPS_SET_SELECTED,
-    setEntity: types.TRIPS_GET_SUCCESS,
+    request: tripsTypes.TRIPS_LIST_REQUEST,
+    success: tripsTypes.TRIPS_LIST_SUCCESS,
+    failure: tripsTypes.TRIPS_LIST_FAILURE,
+    setOrder: tripsTypes.TRIPS_SET_ORDER,
+    setSelected: tripsTypes.TRIPS_SET_SELECTED,
+    setEntity: tripsTypes.TRIPS_GET_SUCCESS,
 })
 
 const locations = createReducer({
-    success: types.SET_LOCATIONS,
+    success: locationsTypes.GET_LOCATIONS_SUCCESS,
 })
 
 const members = createReducer({
-    success: types.SET_MEMBERS,
+    success: tripsTypes.SET_MEMBERS,
 })
 
 export default combineReducers({

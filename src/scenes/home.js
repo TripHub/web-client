@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { withAuth } from '../enhancers/auth'
+import { NavFrame } from '../modules/core/frame'
 import trips from '../modules/trips'
 import List from '../modules/trips/components/list'
 
@@ -10,7 +11,7 @@ class Home extends React.Component {
     constructor (props) {
         super(props)
         const { dispatch } = props
-        this.actions = bindActionCreators(trips.actions, dispatch)
+        this.actions = bindActionCreators(trips.actions.trips, dispatch)
     }
 
     componentDidMount () {
@@ -21,12 +22,14 @@ class Home extends React.Component {
         const { trips } = this.props
 
         return (
-            <main className='container'>
-                <List
-                    order={trips.order}
-                    entities={trips.entities}
-                />
-            </main>
+            <NavFrame>
+                <main className='container'>
+                    <List
+                        order={trips.order}
+                        entities={trips.entities}
+                    />
+                </main>
+            </NavFrame>
         )
     }
 }

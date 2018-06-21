@@ -26,7 +26,7 @@ import CreateLocation from './scenes/location/create'
 
 const AuthenticatedRoutes = withAuth(() => {
     return (
-        <React.Fragment>
+        <Switch>
             {/* Global Scenes */}
             <Route exact path='/' component={Home} />
             <Route exact path='/create' component={CreateTrip} />
@@ -35,7 +35,7 @@ const AuthenticatedRoutes = withAuth(() => {
             <Route path='/:tid/:lid/new' component={CreateLocation} />
             <Route path='/:tid/:lid' component={LocationOverview} />
             <Route exact path='/:tid' component={TripOverview} />
-        </React.Fragment>
+        </Switch>
     )
 })
 

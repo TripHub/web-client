@@ -1,8 +1,9 @@
 import { normalize } from 'normalizr'
 
-import api from '../../utils/api'
-import { NAME } from './constants'
-import { trip } from './schema'
+import api from '../../../utils/api'
+import { NAME } from '../constants'
+import { trip } from '../schema'
+import { setLocations } from './locations'
 
 export const types = {
     TRIPS_LIST_REQUEST: `${NAME}/TRIPS_LIST_REQUEST`,
@@ -11,12 +12,7 @@ export const types = {
     TRIPS_SET_ORDER: `${NAME}/TRIPS_LIST_SET_ORDER`,
     TRIPS_SET_SELECTED: `${NAME}/TRIPS_SET_SELECTED`,
     
-    SET_LOCATIONS: `${NAME}/SET_LOCATIONS`,
     SET_MEMBERS: `${NAME}/SET_MEMBERS`,
-
-    LOCATIONS_CREATE_REQUEST: `${NAME}/LOCATIONS_CREATE_REQUEST`,
-    LOCATIONS_CREATE_SUCCESS: `${NAME}/LOCATIONS_CREATE_SUCCESS`,
-    LOCATIONS_CREATE_FAILURE: `${NAME}/LOCATIONS_CREATE_FAILURE`,
 
     TRIPS_GET_REQUEST: `${NAME}/TRIPS_GET_REQUEST`,
     TRIPS_GET_SUCCESS: `${NAME}/TRIPS_GET_SUCCESS`,
@@ -30,11 +26,7 @@ export const types = {
 const listRequest = () => ({ type: types.TRIPS_LIST_REQUEST })
 const listSuccess = payload => ({ type: types.TRIPS_LIST_SUCCESS, payload })
 const listFailure = payload => ({ type: types.TRIPS_LIST_FAILURE, payload, error: true })
-const locationCreateRequest = () => ({ type: types.LOCATIONS_CREATE_REQUEST })
-const locationCreateSuccess = payload => ({ type: types.LOCATIONS_CREATE_SUCCESS, payload })
-const locationCreateFailure = payload => ({ type: types.LOCATIONS_CREATE_FAILURE, payload, error: true })
 const listSetOrder = payload => ({ type: types.TRIPS_SET_ORDER, payload })
-const listSetLocations = payload => ({ type: types.SET_LOCATIONS, payload })
 const listSetMembers = payload => ({ type: types.SET_MEMBERS, payload })
 const getRequest = () => ({ type: types.TRIPS_GET_REQUEST })
 const getSuccess = payload => ({ type: types.TRIPS_GET_SUCCESS, payload })
@@ -43,7 +35,14 @@ const createRequest = () => ({ type: types.TRIPS_CREATE_REQUEST })
 const createSuccess = payload => ({ type: types.TRIPS_CREATE_SUCCESS, payload })
 const createFailure = payload => ({ type: types.TRIPS_CREATE_FAILURE, payload, error: true })
 
-export const setSelected = payload => ({ type: types.TRIPS_SET_SELECTED, payload })
+/**
+ * Set the id of the currently selected/active trip.
+ * This updates the response from selectors.
+ */
+export const setSelected = payload => ({
+    type: types.TRIPS_SET_SELECTED,
+    payload
+})
 
 /**
  * List user trips.
@@ -79,7 +78,7 @@ export const get = id => dispatch => {
             // normalise response
             const normalized = normalize(res.data, trip)
             // dispatch success and resolve promise
-            dispatch(listSetLocations(normalized.entities.locations))
+            dispatch(setLocations(normalized.entities.locations))
             dispatch(listSetMembers(normalized.entities.members))
             dispatch(getSuccess(normalized.entities.trips[normalized.result]))
             resolve(normalized)
@@ -97,30 +96,12 @@ export const get = id => dispatch => {
  */
 export const create = (data) => (dispatch) => {
     dispatch(createRequest())
-    return new Promise(async (resolve, reject) => {
-        try {
-            const res = await api().post('/trips', data)
-            const normalized = normalize(res.data, trip)
-            // dispatch success and resolve promise
-            dispatch(createSuccess(
-                normalized.entities.trips[normalized.result]))
-            resolve(normalized)
-        } catch (error) {
-            // dispatch failure and reject promise
-            dispatch(createFailure(error))
-            reject(error)
-        }
-    })
-}
-
-/**
- * Creates a location for a specific trip.
- * @param {number} tripId id of trip to create location for
- * @param {object} data object containing location data
- */
-export const createLocation = (tripId, data) => (dispatch) => {
-    dispatch(locationCreateRequest())
-    return api().post(`/trips/${tripId}/locations`, data)
-        .then(res => dispatch(locationCreateSuccess(res.data)))
-        .catch(err => dispatch(locationCreateFailure(err)))
+    return api().post('/trips', data)
+        .then(res => res.data)
+        .then(data => normalize(data, trip))
+        .then(normalised => {
+            dispatch(createSuccess(normalised))
+            return normalised
+        })
+        .catch(err => dispatch(createFailure(err)))
 }

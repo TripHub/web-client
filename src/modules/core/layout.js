@@ -11,4 +11,5 @@ export const Main = styled.main`
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow-y: auto;
 `

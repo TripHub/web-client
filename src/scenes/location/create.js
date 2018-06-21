@@ -16,6 +16,10 @@ class Create extends React.Component {
         loading: false
     }
 
+    componentWillUnmount () {
+        clearTimeout(this.timer)
+    }
+
     timer = null
 
     handleSelect = (selected) => {
@@ -83,7 +87,7 @@ class Create extends React.Component {
 
         const { history, activeTrip, actions } = this.props
         const { name, geometry } = this.state.selected
-        actions.createLocation(activeTrip.id, {
+        actions.locations.create(activeTrip.id, {
             title: name,
             lat: geometry.location.lat,
             lng: geometry.location.lng,
@@ -122,7 +126,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(trips.actions, dispatch)
+    actions: {
+        locations: bindActionCreators(trips.actions.locations, dispatch),
+    }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTripDetail(Create))
