@@ -53,61 +53,76 @@ const SectionBody = styled.section`
 `
 
 const Sidebar = ({ trip, locations }) => {
+    const Masthead = () => (
+        <UndecoratedLink to='/'>
+            <Brand>TripHub</Brand>
+        </UndecoratedLink>
+    )
+
+    const TripLinks = ({ trip }) => (
+        <Section>
+            <SectionHeading>My Trip</SectionHeading>
+            <SectionBody>
+                <SidebarLink exact to={`/${trip.id}`}>
+                    <Icon>
+                        <ion-icon name='globe' />
+                    </Icon>
+                    Trip
+                </SidebarLink>
+                <SidebarLink to='#'>
+                    <Icon>
+                        <ion-icon name='chatbubbles' />
+                    </Icon>
+                    Channels
+                </SidebarLink>
+                <SidebarLink to='#'>
+                    <Icon>
+                        <ion-icon name='ios-paper' />
+                    </Icon>
+                    Travel Documents
+                </SidebarLink>
+            </SectionBody>
+        </Section>
+    )
+
+    const LocationLinks = ({ locations }) => (
+        <Section>
+            <SectionHeading>Locations</SectionHeading>
+            <SectionBody>
+                {
+                    locations.map(location => {
+                        return (
+                            <SidebarLink
+                                to={`/${trip.id}/${location.id}`}
+                                key={location.id}
+                            >
+                                {location.title}
+                            </SidebarLink>
+                        )
+                    })
+                }
+                {
+                    trip &&
+                    <SidebarLink to={`/${trip.id}/location/new`}>
+                        Add location
+                    </SidebarLink>}
+            </SectionBody>
+        </Section>
+    )
+
     return (
         <Background>
-            <UndecoratedLink to='/'>
-                <Brand>TripHub</Brand>
-            </UndecoratedLink>
-
-            <Section>
-                <SectionHeading>My Trip</SectionHeading>
-                <SectionBody>
-                    <SidebarLink to='#'>
-                        <Icon>
-                            <ion-icon name='chatbubbles' />
-                        </Icon>
-                        Channels
-                    </SidebarLink>
-                    <SidebarLink to='#'>
-                        <Icon>
-                            <ion-icon name='ios-paper' />
-                        </Icon>
-                        Travel Documents
-                    </SidebarLink>
-                </SectionBody>
-            </Section>
-
-            <Section>
-                <SectionHeading>Locations</SectionHeading>
-                <SectionBody>
-                    {
-                        trip &&
-                        locations &&
-                        locations.map(location => {
-                            return (
-                                <SidebarLink
-                                    to={`/${trip.id}/${location.id}`}
-                                    key={location.id}
-                                >
-                                    {location.title}
-                                </SidebarLink>
-                            )
-                        })
-                    }
-                    {
-                        trip &&
-                        <SidebarLink to={`/${trip.id}/location/new`}>
-                            Add location
-                        </SidebarLink>}
-                </SectionBody>
-            </Section>
+            <Masthead />
+            { trip && <TripLinks trip={trip} /> }
+            { locations && <LocationLinks locations={locations} /> }
         </Background>
     )
 }
 
 Sidebar.propTypes = {
     trip: shape({
-        id: number.isRequired
+        id: number.isRequired,
+        name: string.isRequired,
     }),
     locations: arrayOf(shape({
         id: number.isRequired,
