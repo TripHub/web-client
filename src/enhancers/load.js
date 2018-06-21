@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import trip from '../modules/trips' 
+import trip from '../modules/trip' 
 import { AssertionError } from 'assert';
 
 /**
@@ -38,7 +38,9 @@ export function withTripDetail (Component) {
         }
 
         componentDidMount() {
-            this.loadFromTripId()
+            if (!this.props.activeTrip) {
+                this.loadFromTripId()
+            }
         }
 
         componentDidUpdate (prevProps, prevState) {
@@ -50,6 +52,7 @@ export function withTripDetail (Component) {
         }
         
         loadFromTripId () {
+            console.log('call trip get api')
             this.actions.get(this.tripId)
                 .then(this.updateSelectedTripIfNecessary)
         }

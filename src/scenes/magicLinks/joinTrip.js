@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Auth from '../../utils/auth'
-import JoinForm from '../../modules/trips/components/joinForm'
+import JoinForm from '../../modules/trip/components/joinForm'
 
 class JoinTrip extends React.Component {
     componentDidMount () {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import api from '../../utils/api'
 import { withTripDetail } from '../../enhancers/load'
 import { NavSidebarFrame } from '../../modules/core/frame'
-import trips from '../../modules/trips'
+import trip from '../../modules/trip'
 import CreateForm from '../../modules/locations/components/createForm'
 
 class Create extends React.Component {
@@ -105,6 +105,7 @@ class Create extends React.Component {
                             isValid: this.isFormValid
                         }}
                         values={{
+                            searchText: this.state.searchText,
                             selected: this.state.selected,
                             suggestions: this.state.suggestions,
                         }}
@@ -122,12 +123,12 @@ class Create extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    activeTrip: trips.selectors.activeTripSelector(state),
+    activeTrip: trip.selectors.activeTripSelector(state),
 })
 
 const mapDispatchToProps = dispatch => ({
     actions: {
-        locations: bindActionCreators(trips.actions.locations, dispatch),
+        locations: bindActionCreators(trip.actions.locations, dispatch),
     }
 })
 

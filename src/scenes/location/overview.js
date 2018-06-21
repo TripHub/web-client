@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { withTripDetail } from '../../enhancers/load'
 import { NavSidebarFrame } from '../../modules/core/frame'
-import trips from '../../modules/trips'
+import trip from '../../modules/trip'
 
 class Location extends React.Component {
 
@@ -20,9 +20,9 @@ class Location extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    activeTrip: trips.selectors.activeTripSelector(state),
-    trips: trips.selectors.tripsSelector(state),
-    locations: trips.selectors.locationsSelector(state),
+    activeTrip: trip.selectors.activeTripSelector(state),
+    trips: trip.selectors.tripsSelector(state),
+    locations: trip.selectors.locationsSelector(state),
 })
 
 export default connect(mapStateToProps)(withTripDetail(Location))

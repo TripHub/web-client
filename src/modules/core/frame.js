@@ -2,10 +2,9 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import trip from '../trips'
+import trip from '../trip'
 import Nav from './nav'
 import Sidebar from './sidebar'
-import { NotFound } from './error'
 import { Layout, Main } from './layout'
 
 class _NavSidebarFrame extends React.Component {
@@ -17,7 +16,7 @@ class _NavSidebarFrame extends React.Component {
     }
 
     render () {
-        const { trips, activeTrip, locations } = this.props
+        const { activeTrip, locations } = this.props
 
         const tripLocations = activeTrip && activeTrip.locations
             ? activeTrip.locations
@@ -53,8 +52,8 @@ class _NavFrame extends React.Component {
 
 const mapStateToProps = state => ({
     activeTrip: trip.selectors.activeTripSelector(state),
-    trips: trip.selectors.tripsSelector(state),
     locations: trip.selectors.locationsSelector(state),
+    // trips: trip.selectors.tripsSelector(state),
     // members: trip.selectors.membersSelector(state),
 })
 

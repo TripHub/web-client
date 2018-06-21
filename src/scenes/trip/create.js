@@ -3,14 +3,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { NavFrame } from '../../modules/core/frame'
-import CreateForm from '../../modules/trips/components/createForm'
-import trips from '../../modules/trips'
+import CreateForm from '../../modules/trip/components/createForm'
+import trip from '../../modules/trip'
 
 class Create extends React.Component {
     constructor (props) {
         super(props)
         const { dispatch } = props
-        this.actions = bindActionCreators(trips.actions.trips, dispatch)
+        this.actions = bindActionCreators(trip.actions.trips, dispatch)
     }
 
     state = {

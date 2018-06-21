@@ -5,17 +5,17 @@ import { connect } from 'react-redux'
 import { NotFound } from '../../modules/core/error'
 import { NavSidebarFrame } from '../../modules/core/frame'
 import { withTripDetail } from '../../enhancers/load'
-import trips from '../../modules/trips'
+import trip from '../../modules/trip'
 
 class Overview extends React.Component {
     constructor (props) {
         super(props)
         
-        this.actions = bindActionCreators(trips.actions.trips, props.dispatch)
+        this.actions = bindActionCreators(trip.actions.trips, props.dispatch)
     }
 
     render () {
-        const { activeTrip, trips, locations, members } = this.props
+        const { activeTrip, trips } = this.props
 
         if (trips.loading) {
             return <p>Loading...</p>
@@ -34,10 +34,10 @@ class Overview extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    activeTrip: trips.selectors.activeTripSelector(state),
-    trips: trips.selectors.tripsSelector(state),
-    locations: trips.selectors.locationsSelector(state),
-    members: trips.selectors.membersSelector(state),
+    activeTrip: trip.selectors.activeTripSelector(state),
+    trips: trip.selectors.tripsSelector(state),
+    locations: trip.selectors.locationsSelector(state),
+    members: trip.selectors.membersSelector(state),
 })
 
 export default connect(mapStateToProps)(withTripDetail(Overview))

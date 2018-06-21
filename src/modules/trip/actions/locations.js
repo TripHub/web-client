@@ -1,8 +1,7 @@
-import { normalize } from 'normalizr'
+// import { normalize } from 'normalizr'
 
 import api from '../../../utils/api'
 import { NAME } from '../constants'
-import { trip } from '../schema'
 
 export const types = {
     GET_LOCATIONS_SUCCESS: `${NAME}/GET_LOCATIONS_SUCCESS`,

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { func, shape } from 'prop-types'
+import { arrayOf, func, string, shape } from 'prop-types'
 import Select, { components } from 'react-select'
 
 import Button from '../../core/button'
@@ -84,13 +84,14 @@ const CreateForm = ({ loading, form, values, actions }) => {
 
 CreateForm.propTypes = {
     values: shape({
+        searchText: string.isRequired,
         selected: shape(),
+        suggestions: arrayOf(shape()).isRequired,
     }).isRequired,
     form: shape({
         isValid: func.isRequired,
     }).isRequired,
     actions: shape({
-        onSearch: func.isRequired,
         onSelect: func.isRequired,
         onSubmit: func.isRequired,
         onCancel: func.isRequired,

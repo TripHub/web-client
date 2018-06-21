@@ -43,7 +43,11 @@ const Nav = ({ profile, trip }) => {
         <Navbar className='navbar navbar-light bg-light justify-content-between'>
             {
                 tripExists
-                    ? <strong className='nav-item'>{trip.title}</strong>
+                    ? (
+                        <Link className='nav-item' to={`/${trip.id}`}>
+                            <strong>{trip.title}</strong>
+                        </Link>
+                    )
                     : <Link className='navbar-brand nav-item nav-link' to='/'>TripHub</Link>
             }
             <div className='d-flex'>

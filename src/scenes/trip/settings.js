@@ -1,14 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { withTripDetail } from '../../enhancers/load'
+import { NavSidebarFrame } from '../../modules/core/frame'
+
 class Settings extends React.Component {
     render () {
         return (
-            <div>Settings {this.tripId}</div>
+            <NavSidebarFrame>
+                Settings {this.tripId}
+            </NavSidebarFrame>
         )
     }
 }
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(Settings)
+export default connect(mapStateToProps)(withTripDetail(Settings))

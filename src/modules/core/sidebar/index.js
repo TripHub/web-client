@@ -53,14 +53,6 @@ const SectionBody = styled.section`
 `
 
 const Sidebar = ({ trip, locations }) => {
-    const locationsList = locations.map(location => {
-        return (
-            <SidebarLink to='#' key={location.id}>
-                {location.title}
-            </SidebarLink>
-        )
-    })
-
     return (
         <Background>
             <UndecoratedLink to='/'>
