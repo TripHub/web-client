@@ -21,6 +21,10 @@ export const types = {
     TRIPS_CREATE_REQUEST: `${NAME}/TRIPS_CREATE_REQUEST`,
     TRIPS_CREATE_SUCCESS: `${NAME}/TRIPS_CREATE_SUCCESS`,
     TRIPS_CREATE_FAILURE: `${NAME}/TRIPS_CREATE_FAILURE`,
+
+    DELETE_REQUEST: `${NAME}/DELETE_REQUEST`,
+    DELETE_SUCCESS: `${NAME}/DELETE_SUCCESS`,
+    DELETE_FAILURE: `${NAME}/DELETE_FAILURE`,
 }
 
 const listRequest = () => ({ type: types.TRIPS_LIST_REQUEST })
@@ -34,6 +38,9 @@ const getFailure = payload => ({ type: types.TRIPS_GET_FAILURE, payload, error: 
 const createRequest = () => ({ type: types.TRIPS_CREATE_REQUEST })
 const createSuccess = payload => ({ type: types.TRIPS_CREATE_SUCCESS, payload })
 const createFailure = payload => ({ type: types.TRIPS_CREATE_FAILURE, payload, error: true })
+const deleteRequest = () => ({ type: types.DELETE_REQUEST })
+const deleteSuccess = payload => ({ type: types.DELETE_SUCCESS, payload })
+const deleteFailure = payload => ({ type: types.DELETE_FAILURE, payload, error: true })
 
 /**
  * Set the id of the currently selected/active trip.
@@ -104,4 +111,12 @@ export const create = (data) => (dispatch) => {
             return normalised
         })
         .catch(err => dispatch(createFailure(err)))
+}
+
+export const remove = (id) => (dispatch) => {
+    dispatch(deleteRequest())
+    return api().delete(`/trips/${id}`)
+        .then(res => res.data)
+        .then(data => dispatch(deleteSuccess(data)))
+        .catch(err => dispatch(deleteFailure(err)))
 }

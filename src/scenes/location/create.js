@@ -96,6 +96,8 @@ class Create extends React.Component {
     }
 
     render () {
+        const { history, activeTrip } = this.props
+
         return (
             <NavSidebarFrame>
                 <div className='container-fluid'>
@@ -113,7 +115,7 @@ class Create extends React.Component {
                             onInputChange: this.onInputChange,
                             onSelect: this.handleSelect,
                             onSubmit: this.onSubmit,
-                            onCancel: console.log,
+                            onCancel: () => history.push(`/${activeTrip.id}`),
                         }}
                     />
                 </div>

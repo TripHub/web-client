@@ -30,17 +30,15 @@ const Nav = ({ profile, trip }) => {
 
     const profileDropdown = (
         <DropdownLink button={<Icon name='person' />}>
-            <React.Fragment>
-                <Link to='#' className='dropdown-item'>Profile</Link>
-                <Link to='#' className='dropdown-item'>Account</Link>
-                <div className='dropdown-divider' />
-                <Link to='/logout' className='dropdown-item'>Logout</Link>
-            </React.Fragment>
+            <Link to='#' className='dropdown-item'>Profile</Link>
+            <Link to='#' className='dropdown-item'>Account</Link>
+            <div className='dropdown-divider' />
+            <Link to='/logout' className='dropdown-item'>Logout</Link>
         </DropdownLink>
     )
 
     return (
-        <Navbar className='navbar navbar-light bg-light justify-content-between'>
+        <Navbar className='navbar navbar-light bg-light justify-content-between mb-3'>
             {
                 tripExists
                     ? (
