@@ -16,7 +16,7 @@ class _NavSidebarFrame extends React.Component {
     }
 
     render () {
-        const { activeTrip, locations } = this.props
+        const { activeTrip, locations, withGutter } = this.props
 
         const tripLocations = activeTrip && activeTrip.locations
             ? activeTrip.locations
@@ -27,7 +27,7 @@ class _NavSidebarFrame extends React.Component {
             <Layout>
                 <Sidebar trip={activeTrip} locations={tripLocations} />
                 <Main>
-                    <Nav trip={activeTrip} />
+                    <Nav trip={activeTrip} withGutter={withGutter} />
                     {this.props.children}
                 </Main>
             </Layout>

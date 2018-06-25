@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { NotFound } from '../../modules/core/error'
 import { NavSidebarFrame } from '../../modules/core/frame'
 import { withTripDetail } from '../../enhancers/load'
+import Map from '../../modules/trip/components/map'
 import trip from '../../modules/trip'
 
 class Overview extends React.Component {
@@ -26,7 +27,8 @@ class Overview extends React.Component {
         }
 
         return (
-            <NavSidebarFrame>
+            <NavSidebarFrame withGutter={false}>
+                <Map />
                 {activeTrip.title} overview
             </NavSidebarFrame>
         )
