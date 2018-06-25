@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
 
-import trips from './trips'
+import profile from './profile'
+import trip from './trip'
 
 export default combineReducers({
-    [trips.constants.NAME]: trips.reducer,
+    [profile.constants.NAME]: profile.reducer,
+    [trip.constants.NAME]: trip.reducer,
 })

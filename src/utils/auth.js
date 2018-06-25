@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js'
+import jwt from 'jwt-decode'
 
 export default class Auth {
     constructor () {
@@ -34,6 +35,20 @@ export default class Auth {
     }
 
     /**
+     * Removes tokens from storage.
+     */
+    static destroy () {
+        window.localStorage.removeItem(Auth.accessTokenName)
+        window.localStorage.removeItem(Auth.expiryTimeName)
+        window.localStorage.removeItem(Auth.idTokenName)
+    }
+
+    /**
+     * Alias for destroy.
+     */
+    static logout = Auth.destroy
+
+    /**
      * Get the access token from storage.
      */
     static get accessToken () {
@@ -55,6 +70,17 @@ export default class Auth {
     }
 
     /**
+     * Returns the id token as an object.
+     */
+    static get decodedIdToken () {
+        try {
+            return jwt(Auth.idToken)
+        } catch (error) {
+            return {}
+        }
+    }
+
+    /**
      * Parse the window.location.hash
      * @param {string} callback 
      */
@@ -71,7 +97,7 @@ export default class Auth {
     /**
      * Redirect to Auth0 login page.
      */
-    login () {
-        this.auth0.authorize()
+    login (config = {}) {
+        this.auth0.authorize(config)
     }
 }

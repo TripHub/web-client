@@ -1,17 +1,17 @@
 import { types } from './actions'
 
 const initialState = {
-    entities: {},
-    order: [],
-    selected: null,
-    loading: false,
-    error: null,
+    name: '',
+    nickname: '',
+    emailVerified: false,
+    email: '',
+    picture: ''
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case types.LIST_REQUEST:
-            return { ...state, loading: true }
+        case types.SET:
+            return action.payload
         default:
             return state
     }

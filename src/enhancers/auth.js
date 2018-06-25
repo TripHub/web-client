@@ -9,9 +9,6 @@ export function withAuth (Component) {
         }
 
         componentDidMount () {
-            const secondsToGo = (Auth.expiryTime - Date.now()) / 1000
-            console.log(`${secondsToGo.toFixed(0)}s until expiry`)
-            
             this.setState({
                 isAuthenticated: Auth.isAuthenticated
             }, this.redirectIfNeeded)
@@ -19,6 +16,7 @@ export function withAuth (Component) {
 
         redirectIfNeeded () {
             const { history, location } = this.props
+
             if (!this.state.isAuthenticated) {
                 const loginUrl = {
                     pathname: '/login',

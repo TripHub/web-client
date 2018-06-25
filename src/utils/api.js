@@ -7,11 +7,10 @@ import Auth from './auth'
  * set (if available)
  */
 export default () => {
-    const accessToken = Auth.accessToken
     return axios.create({
-        baseURL: process.env.REACT_APP_SERVICES_TRIP,
+        baseURL: `${process.env.REACT_APP_SERVICES_TRIP}/v1`,
         headers: {
-            Authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${Auth.accessToken}`
         }
     })
 }

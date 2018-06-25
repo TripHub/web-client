@@ -1,8 +1,9 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import Routes from './routes'
 
+import Routes from './routes'
 import createStore from './store'
+import OnLoad from './onLoad'
 
 // import global styles
 import './static/css/bootstrap.min.css'
@@ -10,16 +11,14 @@ import './static/css/bootstrap.min.css'
 // redux store
 const store = createStore()
 
-export default class App extends React.Component {
-    componentDidMount () {
-        // global app init methods...
-    }
-
-    render () {
-        return (
-            <Provider store={store}>
+const App = () => {
+    return (
+        <Provider store={store}>
+            <React.Fragment>
+                <OnLoad />
                 <Routes />
-            </Provider>
-        )
-    }
+            </React.Fragment>
+        </Provider>
+    )
 }
+export default App
