@@ -15,6 +15,14 @@ class Overview extends React.Component {
         this.actions = bindActionCreators(trip.actions.trips, props.dispatch)
     }
 
+    getMarkers = () => {
+        const { activeTrip, locations } = this.props
+        console.log(activeTrip)
+
+        // massage markers to an array of lat/lng objects
+        return activeTrip.locations.map(id => locations.entities[id])
+    }
+
     render () {
         const { activeTrip, trips } = this.props
 
@@ -26,9 +34,14 @@ class Overview extends React.Component {
             return <NotFound />
         }
 
+        const locations = this.getMarkers()
+        console.log('markers:', locations)
+
         return (
             <NavSidebarFrame withGutter={false}>
-                <Map />
+                <Map
+                    markers={locations}
+                />
                 {activeTrip.title} overview
             </NavSidebarFrame>
         )

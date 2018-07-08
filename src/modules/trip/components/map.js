@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import mapboxgl from 'mapbox-gl'
 
@@ -42,23 +43,38 @@ class Map extends React.Component {
         this.mapContainer = React.createRef()
     }
 
+    static propTypes = {
+        markers: PropTypes.arrayOf(PropTypes.shape({
+            lat: PropTypes.number.isRequired,
+            lng: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+        })).isRequired
+    }
+
     componentDidMount() {
+        const { markers } = this.props
+        console.log(markers)
+
         mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
         // create map
         const map = new mapboxgl.Map({
             container: 'mapbox.map',
             style: 'mapbox://styles/mapbox/streets-v9',
             center: [-70.976,42.384],
-            zoom: 11,
+            zoom: 3,
         })
         // add markers to map
-        geojson.features.map(feature => {
+        markers.map(feature => {
+            // create element to add to map
             const marker = document.createElement('div')
             marker.style.background = 'red'
-            marker.style.width = '11px'
-            marker.style.height = '11px'
+            marker.style.width = '8px'
+            marker.style.height = '8px'
+            marker.style.borderRadius = '50%'
+            marker.innerHTML = feature.title
+            // attach to map
             new mapboxgl.Marker(marker)
-                .setLngLat(feature.geometry.coordinates)
+                .setLngLat([feature.lng, feature.lat])
                 .addTo(map)
         })
     }
