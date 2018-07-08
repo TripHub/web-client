@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
+    "mapbox-gl": "^0.46.0",
     "moment": "^2.22.2",
     "normalizr": "^3.2.4",
     "react": "^16.4.0",

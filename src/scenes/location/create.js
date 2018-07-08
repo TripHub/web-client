@@ -87,6 +87,7 @@ class Create extends React.Component {
 
         const { history, activeTrip, actions } = this.props
         const { name, geometry } = this.state.selected
+
         actions.locations.create(activeTrip.id, {
             title: name,
             lat: geometry.location.lat,

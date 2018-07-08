@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
+import Helmet from 'react-helmet'
 
 import Routes from './routes'
 import createStore from './store'
@@ -15,6 +16,12 @@ const App = () => {
     return (
         <Provider store={store}>
             <React.Fragment>
+                <Helmet>
+                    <link
+                        href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css'
+                        rel='stylesheet'
+                    />
+                </Helmet>
                 <OnLoad />
                 <Routes />
             </React.Fragment>

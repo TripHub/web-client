@@ -1,7 +1,8 @@
 import React from 'react'
-import { string, shape } from 'prop-types'
+import { bool, string, shape } from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import classnames from 'classnames'
 
 import Icon from '../icon'
 import DropdownLink from './components/dropdownLink'
@@ -10,7 +11,7 @@ const Navbar = styled.nav`
     flex-shrink: 0;
 `
 
-const Nav = ({ profile, trip }) => {
+const Nav = ({ profile, trip, withGutter }) => {
     const tripExists = trip && trip.id
 
     const tripDropdown = tripExists
@@ -38,7 +39,11 @@ const Nav = ({ profile, trip }) => {
     )
 
     return (
-        <Navbar className='navbar navbar-light bg-light justify-content-between mb-3'>
+        <Navbar className={
+            classnames('navbar navbar-light bg-light justify-content-between', {
+                'mb-3': withGutter
+            })
+        }>
             {
                 tripExists
                     ? (
@@ -58,6 +63,7 @@ const Nav = ({ profile, trip }) => {
 }
 
 Nav.propTypes = {
+    withGutter: bool,
     trip: shape({
         title: string
     }),
@@ -66,6 +72,10 @@ Nav.propTypes = {
         name: string,
         email: string.isRequired
     })
+}
+
+Nav.defaultProps = {
+    withGutter: true
 }
 
 export default Nav

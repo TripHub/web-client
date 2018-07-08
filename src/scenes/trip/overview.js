@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { NotFound } from '../../modules/core/error'
 import { NavSidebarFrame } from '../../modules/core/frame'
 import { withTripDetail } from '../../enhancers/load'
+import Map from '../../modules/trip/components/map'
 import trip from '../../modules/trip'
 
 class Overview extends React.Component {
@@ -12,6 +13,14 @@ class Overview extends React.Component {
         super(props)
         
         this.actions = bindActionCreators(trip.actions.trips, props.dispatch)
+    }
+
+    getMarkers = () => {
+        const { activeTrip, locations } = this.props
+        console.log(activeTrip)
+
+        // massage markers to an array of lat/lng objects
+        return activeTrip.locations.map(id => locations.entities[id])
     }
 
     render () {
@@ -25,8 +34,14 @@ class Overview extends React.Component {
             return <NotFound />
         }
 
+        const locations = this.getMarkers()
+        console.log('markers:', locations)
+
         return (
-            <NavSidebarFrame>
+            <NavSidebarFrame withGutter={false}>
+                <Map
+                    markers={locations}
+                />
                 {activeTrip.title} overview
             </NavSidebarFrame>
         )
