@@ -38,7 +38,7 @@ class Settings extends React.Component {
 
     onDelete = e => {
         const { history, activeTrip } = this.props
-        this.actions.remove(activeTrip.id)
+        this.actions.trips.remove(activeTrip.id)
             .then(this.actions.list)
             .then(() => history.push('/'))
     }

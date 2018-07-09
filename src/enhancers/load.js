@@ -28,7 +28,7 @@ export function withTripDetail (Component) {
             this.actions = bindActionCreators(trip.actions.trips, props.dispatch)
         }
 
-        state = { loading: false }
+        state = { loading: false, lastLoaded: null }
 
         get tripId () {
             // trip id is in path params
@@ -51,7 +51,7 @@ export function withTripDetail (Component) {
         componentDidUpdate (prevProps, prevState) {
             // don't match types strictly here as id's may be numbers but url
             // params are strings
-            if (prevProps.match.params.tid != this.tripId) {
+            if (this.state.lastLoaded !== this.tripId) {
                 this.loadFromTripId(this.tripId)
             }
         }
@@ -59,6 +59,7 @@ export function withTripDetail (Component) {
         loadFromTripId () {
             return this.actions.get(this.tripId)
                 .then(this.updateSelectedTripIfNecessary)
+                .then(() => this.setState({ lastLoaded: this.tripId }))
         }
 
         updateSelectedTripIfNecessary = () => {

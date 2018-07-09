@@ -8,6 +8,7 @@ const invitations = createReducer({
     success: types.LIST_SUCCESS,
     failure: types.LIST_FAILURE,
     setOrder: types.LIST_SET_ORDER,
+    setEntity: types.GET_SUCCESS,
 })
 
 export default combineReducers({

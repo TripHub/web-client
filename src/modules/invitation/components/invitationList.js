@@ -63,7 +63,7 @@ const InvitationList = ({ invitations }) => {
                                 Expires {expiresIn}
                             </small>
                             <Button
-                                className='btn-secondary'
+                                className='btn-warning'
                             >
                                 <ShiftDown>
                                     <Icon name='close' />

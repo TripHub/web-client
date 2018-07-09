@@ -122,7 +122,7 @@ const Sidebar = ({ trip, locations }) => {
 Sidebar.propTypes = {
     trip: shape({
         id: number.isRequired,
-        name: string.isRequired,
+        title: string.isRequired,
     }),
     locations: arrayOf(shape({
         id: number.isRequired,
