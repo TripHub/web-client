@@ -8,6 +8,7 @@ import OnLoad from './onLoad'
 
 // import global styles
 import './static/css/bootstrap.min.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 // redux store
 const store = createStore()

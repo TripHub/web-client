@@ -1,9 +1,10 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { AssertionError } from 'assert';
 
 import trip from '../modules/trip' 
-import { AssertionError } from 'assert';
+import { NotFound } from '../modules/core/error'
 
 /**
  * Load trip details from the `id` param in the URL.
@@ -27,6 +28,8 @@ export function withTripDetail (Component) {
             this.actions = bindActionCreators(trip.actions.trips, props.dispatch)
         }
 
+        state = { loading: false }
+
         get tripId () {
             // trip id is in path params
             const tid = this.props.match.params.tid
@@ -37,9 +40,11 @@ export function withTripDetail (Component) {
             }
         }
 
-        componentDidMount() {
+        componentDidMount () {
             if (!this.props.activeTrip) {
+                this.setState({ loading: true })
                 this.loadFromTripId()
+                    .then(() => this.setState({ loading: false }))
             }
         }
 
@@ -52,8 +57,7 @@ export function withTripDetail (Component) {
         }
         
         loadFromTripId () {
-            console.log('call trip get api')
-            this.actions.get(this.tripId)
+            return this.actions.get(this.tripId)
                 .then(this.updateSelectedTripIfNecessary)
         }
 
@@ -65,6 +69,12 @@ export function withTripDetail (Component) {
         }
 
         render () {
+            if (this.state.loading) {
+                return null
+            } else if (!this.props.activeTrip) {
+                return <NotFound />
+            }
+            // component is guarenteed to have activeTrip set
             return <Component {...this.props} />
         }
     })

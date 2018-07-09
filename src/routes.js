@@ -47,7 +47,7 @@ export default () => (
             <Route exact path='/logout' component={Logout} />
             <Route exact path='/callback' component={Callback} />
             {/* Magic Links */}
-            <Route exact path='/ml/join' component={JoinTrip} />
+            <Route exact path='/ml/join/:iid' component={JoinTrip} />
             {/* Authenticated Routes */}
             <Route component={AuthenticatedRoutes} />
             {/* Fallback */}
